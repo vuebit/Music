@@ -1,0 +1,388 @@
+.video {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 320px;
+    gap: 18px;
+}
+
+.v-side {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+/* stage */
+.stage {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    border-radius: 9px 9px 0 0;
+    overflow: hidden;
+    cursor: pointer;
+    background: #000;
+}
+
+.film {
+    position: absolute;
+    inset: 0;
+    transition: filter .4s;
+}
+
+.film.live {
+    animation: kenburns 16s ease-in-out infinite alternate;
+}
+
+.grain {
+    position: absolute;
+    inset: 0;
+    opacity: .08;
+    mix-blend-mode: overlay;
+    animation: flicker 3s steps(4) infinite;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.lb {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 7%;
+    background: #050608;
+    z-index: 2;
+}
+
+.lb.top {
+    top: 0;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, .5);
+}
+
+.lb.bot {
+    bottom: 0;
+    box-shadow: 0 -4px 10px rgba(0, 0, 0, .5);
+}
+
+.stage-hud {
+    position: absolute;
+    z-index: 3;
+    top: calc(7% + 10px);
+    left: 14px;
+    right: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #cfd3da;
+    letter-spacing: .16em;
+}
+
+.stage-hud span {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    background: rgba(8, 9, 12, .55);
+    padding: 4px 9px;
+    border-radius: 5px;
+}
+
+.chip-4k {
+    position: absolute;
+    z-index: 3;
+    bottom: calc(7% + 10px);
+    left: 14px;
+    background: rgba(8, 9, 12, .55);
+    padding: 4px 9px;
+    border-radius: 5px;
+    letter-spacing: .18em;
+    color: #cfd3da;
+}
+
+.stage-play {
+    position: absolute;
+    z-index: 4;
+    inset: 0;
+    margin: auto;
+    width: 74px;
+    height: 74px;
+    border-radius: 50%;
+    border: none;
+    background: color-mix(in srgb, var(--video) 92%, white);
+    color: #1c0d0b;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    transition: .2s;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .55), 0 0 0 6px color-mix(in srgb, var(--video) 25%, transparent);
+}
+
+.stage-play svg {
+    width: 26px;
+    height: 26px;
+    fill: currentColor;
+    margin-left: 3px;
+}
+
+.stage-play:hover {
+    transform: scale(1.07);
+}
+
+/* scrubber */
+.scrub {
+    position: relative;
+    height: 12px;
+    background: #22252c;
+    cursor: pointer;
+}
+
+.buffer {
+    position: absolute;
+    inset: 0;
+    width: 62%;
+    background: #333842;
+}
+
+.fill {
+    position: absolute;
+    inset: 0 auto 0 0;
+    background: linear-gradient(90deg, color-mix(in srgb, var(--video) 60%, #22252c), var(--video));
+}
+
+.handle {
+    position: absolute;
+    right: -7px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--video) 40%, transparent), 0 2px 8px rgba(0, 0, 0, .5);
+}
+
+.tick {
+    position: absolute;
+    top: 2px;
+    bottom: 2px;
+    width: 2px;
+    background: rgba(255, 255, 255, .35);
+}
+
+/* meta */
+.v-meta {
+    padding: 18px 20px 20px;
+}
+
+.v-meta h2 {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(30px, 3.4vw, 44px);
+    letter-spacing: .5px;
+    line-height: 1;
+}
+
+.v-meta p {
+    margin-top: 6px;
+    font-size: 13.5px;
+}
+
+.v-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+    margin-top: 14px;
+    flex-wrap: wrap;
+}
+
+.chips {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.chip {
+    padding: 4px 10px;
+    border: 1px solid var(--line);
+    border-radius: 5px;
+    letter-spacing: .16em;
+    color: var(--dim);
+    background: #191c21;
+}
+
+.stats {
+    letter-spacing: .14em;
+}
+
+/* chapters */
+.chp {
+    display: grid;
+    grid-template-columns: 30px 1fr auto;
+    gap: 10px;
+    align-items: center;
+    width: 100%;
+    background: none;
+    border: none;
+    border-top: 1px solid var(--line-soft);
+    color: var(--text);
+    padding: 12px 16px;
+    cursor: pointer;
+    font: inherit;
+    text-align: left;
+    transition: .18s;
+}
+
+.chp:first-of-type {
+    border-top: none;
+}
+
+.chp:hover {
+    background: #1e2128;
+    transform: translateX(3px);
+}
+
+.chp:hover .chp-name {
+    color: var(--video);
+}
+
+.chp .num {
+    color: var(--faint);
+}
+
+.chp-name {
+    font-size: 14px;
+    font-weight: 500;
+    transition: color .18s;
+}
+
+/* reel */
+.thumbs {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    padding: 14px;
+}
+
+.thumb {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    border-radius: 7px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    cursor: pointer;
+    padding: 0;
+    background: #000;
+    transition: .2s;
+}
+
+.thumb:hover {
+    transform: translateY(-3px);
+    border-color: #4a5160;
+}
+
+.thumb.active {
+    box-shadow: 0 0 0 2px var(--video), 0 8px 18px rgba(0, 0, 0, .4);
+}
+
+.t-art {
+    position: absolute;
+    inset: 0;
+}
+
+.t-dur {
+    position: absolute;
+    right: 6px;
+    bottom: 6px;
+    background: rgba(8, 9, 12, .7);
+    padding: 2px 6px;
+    border-radius: 4px;
+    color: #e6e2d8;
+    letter-spacing: .08em;
+}
+
+.t-live {
+    position: absolute;
+    left: 6px;
+    top: 6px;
+    background: var(--video);
+    color: #1c0d0b;
+    padding: 2px 6px;
+    border-radius: 4px;
+    letter-spacing: .12em;
+    font-weight: 600;
+}
+
+@keyframes kenburns {
+    from {
+        transform: scale(1);
+    }
+
+    to {
+        transform: scale(1.09) translate(-1.5%, 1.5%);
+    }
+}
+
+@keyframes flicker {
+
+    0%,
+    100% {
+        opacity: .08;
+    }
+
+    25% {
+        opacity: .05;
+    }
+
+    50% {
+        opacity: .1;
+    }
+
+    75% {
+        opacity: .06;
+    }
+}
+
+@media (max-width: 1080px) {
+    .video {
+        grid-template-columns: 1fr;
+    }
+}
+.film-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* ویدیو کل کادر را پر کند */
+  z-index: 0;
+  background: #000;
+}
+
+.grain {
+  z-index: 1;
+  pointer-events: none; /* کلیک‌ها از روی Grain رد شوند تا به ویدیو برسند */
+}
+
+.stage {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border-radius: 9px 9px 0 0;
+  overflow: hidden;
+  cursor: pointer;
+  background: #000;
+}
+
+/* بقیه استایل‌های قبلی شما بدون تغییر باقی می‌مانند */
+.v-main { display: flex; flex-direction: column; gap: 18px; }
+.v-side { display: flex; flex-direction: column; gap: 18px; }
+.panel { background: var(--bg-panel); border: 1px solid var(--line-color); border-radius: 12px; overflow: hidden; }
+.stage-panel { padding: 0; }
+.scrub { position: relative; height: 12px; background: #22252c; cursor: pointer; }
+.fill { position: absolute; inset: 0 auto 0 0; background: var(--accent); }
+.handle { position: absolute; right: -7px; top: 50%; transform: translateY(-50%); width: 14px; height: 14px; border-radius: 50%; background: #fff; }
+.tick { position: absolute; top: 2px; bottom: 2px; width: 2px; background: rgba(255, 255, 255, .35); }
+.v-meta { padding: 18px 20px; }
+.v-meta h2 { font-family: var(--display); font-size: clamp(30px, 3.4vw, 44px); margin: 0; }
+.chips { display: flex; gap: 8px; margin-top: 10px; }
+.chip { padding: 4px 10px; border: 1px solid var(--line); border-radius: 5px; font-size: 10px; color: var(--text-dim); }
+.thumbs { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 14px; }
+.thumb { position: relative; aspect-ratio: 16 / 10; border-radius: 7px; overflow: hidden; border: 1px solid var(--line); cursor: pointer; padding: 0; background: #000; }
+.thumb.active { box-shadow: 0 0 0 2px var(--accent); }
+.t-art { position: absolute; inset: 0; }
+.t-dur { position: absolute; right: 6px; bottom: 6px; background: rgba(0,0,0,.7); padding: 2px 6px; border-radius: 4px; color: #fff; font-size: 10px; }
+.t-live { position: absolute; left: 6px; top: 6px; background: var(--accent); color: #000; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: bold; }
+.chp { display: grid; grid-template-columns: 30px 1fr auto; gap: 10px; width: 100%; background: none; border: none; border-top: 1px solid var(--line-soft); padding: 12px 16px; cursor: pointer; text-align: left; color: var(--text); }
+.chp:hover { background: var(--bg-hover); }

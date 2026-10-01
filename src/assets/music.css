@@ -1,0 +1,304 @@
+/* ═══════════════════════════════════════════
+   تم متعادل: Midnight Gray (دودی/زغالی)
+   ═══════════════════════════════════════════ */
+
+:root {
+  /* پالت رنگی متعادل */
+  --bg-main: #181a1b;       /* زغالی خیلی تیره (نه مشکی مطلق) */
+  --bg-panel: #23262a;      /* خاکستری تیره برای پنل‌ها */
+  --bg-hover: #2c3035;      /* کمی روشن‌تر برای هاور */
+  
+  --text-main: #e2e4e6;     /* سفید مات (نه سفید خالص) */
+  --text-dim: #9ca3af;      /* خاکستری متوسط */
+  --line-color: #3f444b;    /* خطوط مرزی محو */
+  
+  /* رنگ‌های اکنت (نارنجی ملایم) */
+  --accent: #ffb04d;
+  --music: #ffb04d;
+  --audio: #4fe3a3;
+  --video: #ff6d5f;
+}
+
+body {
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  font-family: 'IBM Plex Sans', sans-serif;
+}
+
+.console {
+  background: var(--bg-main);
+}
+
+/* ═══════════════════════════════════════════
+   استایل عمومی پنل‌ها
+   ═══════════════════════════════════════════ */
+
+.panel {
+  background: var(--bg-panel);
+  border: 1px solid var(--line-color);
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25); /* سایه نرم */
+  overflow: hidden;
+}
+
+.panel-head {
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--line-color);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.02); /* شفافیت بسیار کم */
+}
+
+.panel-head .ph-title {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--text-main);
+  text-transform: uppercase;
+}
+
+/* ═══════════════════════════════════════════
+   طراحی آلبوم‌ها (Vinyl Style - Dark Mode)
+   ═══════════════════════════════════════════ */
+
+.albums {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 24px;
+  padding: 20px;
+}
+
+.album {
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.album:hover {
+  transform: translateY(-5px);
+}
+
+.cover {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 8px;
+  overflow: visible;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+  z-index: 2;
+}
+
+.cover-art {
+  position: absolute;
+  inset: 0;
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--c1), var(--c2));
+  z-index: 2;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.vinyl {
+  position: absolute;
+  top: 4%;
+  left: 4%;
+  width: 92%;
+  height: 92%;
+  border-radius: 50%;
+  /* تغییر رنگ وینیل به خاکستری تیره به جای مشکی مطلق */
+  background: repeating-radial-gradient(#2a2d33 0, #2a2d33 2px, #1f2226 3px, #1f2226 4px);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+  z-index: 1;
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hole {
+  width: 30%;
+  height: 30%;
+  border-radius: 50%;
+  background: #181a1b;
+  border: 2px solid #3f444b;
+  position: relative;
+}
+
+.hole::after {
+  content: '';
+  position: absolute;
+  inset: 10%;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--c1), var(--c2));
+  opacity: 0.9;
+}
+
+.album:hover .vinyl {
+  transform: translateX(45%) rotate(180deg);
+}
+
+.album h4 {
+  margin-top: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-main);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.album:hover h4 {
+  color: var(--accent);
+}
+
+.album .artist {
+  font-size: 12px;
+  color: var(--text-dim);
+  margin-top: 2px;
+}
+
+/* ═══════════════════════════════════════════
+   طراحی لیست آهنگ‌ها (Tracklist)
+   ═══════════════════════════════════════════ */
+
+.row {
+  display: grid;
+  grid-template-columns: 40px 1fr 70px;
+  align-items: center;
+  padding: 12px 20px;
+  border-top: 1px solid var(--line-color);
+  transition: all 0.2s ease;
+  position: relative;
+  background: transparent;
+  border: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  color: var(--text-main);
+}
+
+.row:first-of-type {
+  border-top: none;
+}
+
+.row:hover {
+  background: var(--bg-hover);
+}
+
+.row:hover .t-title {
+  color: var(--accent);
+}
+
+/* حالت فعال */
+.row.active {
+  background: rgba(255, 176, 77, 0.08); /* نارنجی بسیار محو */
+}
+
+.row.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--accent);
+  box-shadow: 0 0 10px var(--accent);
+}
+
+.row.active .t-title {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--text-dim);
+}
+
+.t-title {
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ta-r {
+  text-align: right;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+/* انیمیشن نقطه ضربان‌دار */
+.row.active .t-title::after {
+  content: '';
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--accent);
+  margin-left: 8px;
+  animation: pulse-dot 1s ease-in-out infinite;
+  vertical-align: middle;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.6); }
+}
+
+/* ═══════════════════════════════════════════
+   سایدبار و اسپکتروم
+   ═══════════════════════════════════════════ */
+
+.q-item {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 9px 16px;
+  border-bottom: 1px solid var(--line-color);
+}
+
+.q-item:last-child {
+  border-bottom: none;
+}
+
+.q-txt strong {
+  font-size: 13px;
+  color: var(--text-main);
+}
+
+.q-txt span {
+  font-size: 11px;
+  color: var(--text-dim);
+}
+
+.eq-big i {
+  flex: 1;
+  min-height: 4px;
+  border-radius: 2px 2px 0 0;
+  background: linear-gradient(180deg, var(--accent), rgba(255, 176, 77, 0.2));
+  transition: height .09s linear;
+}
+
+.spec-foot {
+  padding: 0 16px 14px;
+  font-size: 10px;
+  color: var(--text-dim);
+  letter-spacing: .14em;
+}
+
+/* دکمه‌های کانال */
+.ch-btn {
+  background: var(--bg-panel);
+  border: 1px solid var(--line-color);
+  color: var(--text-dim);
+}
+
+.ch-btn.active {
+  background: var(--bg-hover);
+  border-color: var(--accent);
+  color: var(--accent);
+}
