@@ -1,4 +1,3 @@
-// src/lib/Store.ts
 import { reactive } from 'vue'
 
 export type Channel = 'music' | 'audio' | 'video'
@@ -8,23 +7,13 @@ export interface Track {
   title: string
   artist: string
   duration: number
-  bpm?: number
-  previewUrl?: string // لینک فایل صوتی
-  artworkUrl?: string // لینک عکس کاور
-}
-
-export interface video{
-  id : string
-  title : string
-  dur: number
-  artist : number
-  bpm : number
+  previewUrl?: string
 }
 
 export const state = reactive({
   channel: 'music' as Channel,
   playing: false,
-  time: '',
+  time: 0,
   volume: 0.75,
   muted: false,
   current: {
@@ -32,8 +21,7 @@ export const state = reactive({
     title: 'Select a Track',
     artist: '—',
     duration: 0,
-    previewUrl: '',
-    artworkUrl: ''
+    previewUrl: ''
   } as Track
 })
 
@@ -51,6 +39,6 @@ export function toggle() {
 export function load(track: Track, channel: Channel) {
   state.current = track
   state.channel = channel
-  state.time = '0'
+  state.time = 0
   state.playing = true
 }

@@ -1,13 +1,11 @@
-// src/lib/AudioEngine.ts
-class RealAudioEngine {
+class AudioEngine {
   public running = false
   private audio: HTMLAudioElement | null = null
   private _volume = 0.75
   private _muted = false
 
   start(url?: string) {
-    this.stop() // قطع صدای قبلی
-    
+    this.stop()
     if (url) {
       this.audio = new Audio(url)
       this.audio.volume = this._volume
@@ -15,7 +13,6 @@ class RealAudioEngine {
       this.audio.play().catch(e => console.log("Auto-play blocked:", e))
       this.running = true
     } else {
-      // اگر لینکی نبود، فقط شبیه‌سازی کن
       this.running = true
     }
   }
@@ -40,7 +37,6 @@ class RealAudioEngine {
 
   level(): number {
     if (!this.running) return 0
-    // اگر فایل واقعی در حال پخش است، کمی نوسان تصادفی برای زیبایی VU Meter
     return 0.3 + Math.random() * 0.5 * this._volume
   }
 
@@ -50,4 +46,4 @@ class RealAudioEngine {
   }
 }
 
-export const engine = new RealAudioEngine()
+export const engine = new AudioEngine()

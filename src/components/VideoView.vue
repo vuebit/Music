@@ -116,7 +116,7 @@ const chapterNames = ['Intro', 'Verse', 'Chorus', 'Outro']
 const chapterFr = [0, 0.25, 0.6, 0.85]
 
 // پیدا کردن ایندکس آهنگ فعال (اگر نباشد -1 برمی‌گرداند)
-const activeIdx = computed(() => videoList.findIndex(r => r.id === state.current.id))
+const activeIdx = computed(() => videoList.findIndxpo(r => r.id === state.current.id))
 
 // دریافت آیتم فعلی (ممکن است undefined باشد)
 const cur = computed(() => videoList[activeIdx.value])
